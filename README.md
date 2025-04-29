@@ -1,77 +1,28 @@
-# Telegram Music Download Bot 🎵
+# Telegram Language Translation Bot
 
-A simple yet powerful Telegram bot that lets users download songs via JioSaavn search API.
+This is a simple Telegram bot that translates messages sent by users from any language to English using Google Translate API.
 
-![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
-![License](https://img.shields.io/badge/License-Free-green)
+## Steps to Run:
 
----
+1. Clone the repository to your local machine or server.
+2. Create a new bot on Telegram using [BotFather](https://core.telegram.org/bots#botfather) and get the API token.
+3. Add the API token as an environment variable or directly in the `bot.py` file.
+4. Install the required dependencies by running:
+    ```bash
+    pip install -r requirements.txt
+    ```
+5. Start the bot by running:
+    ```bash
+    bash start.sh
+    ```
 
-## 🚀 Features
-- Search any song by typing its name.
-- Instantly get a 320kbps high-quality download link.
-- Lightweight and fast performance.
-- Powered by unofficial JioSaavn API.
+The bot will reply with the translated text when you send a message.
 
----
+## Requirements:
+- Python 3.x
+- Telegram Bot API Token
+- Google Translate API via googletrans package
 
-## 📸 Demo
+## Deployment:
+You can deploy this bot on platforms like [Railway](https://railway.app) for automatic hosting.
 
-> (You can add a screenshot of your bot here later!)
-
----
-
-## ⚙️ Installation
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
-cd YOUR_REPO
-```
-
-### 2. Install dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Add your Bot Token
-- Open `bot.py`
-- Replace:
-```python
-TOKEN = "YAHAN_APNA_BOT_TOKEN_DALO"
-```
-with your actual token from [@BotFather](https://t.me/BotFather).
-
-### 4. Run the Bot
-```bash
-python bot.py
-```
-
----
-
-## 🧰 Requirements
-- python-telegram-bot==20.8
-- requests
-
-(Automatically installed from `requirements.txt`.)
-
----
-
-## ⚡ How It Works
-- User sends a song name in chat.
-- Bot searches using JioSaavn API.
-- Bot returns the **song name + direct download link (320kbps)**.
-
----
-
-## ⚠️ Notes
-- This bot uses **unofficial APIs**. Availability depends on third-party services.
-- If JioSaavn API is down, bot may temporarily not work.
-
----
-
-## 📄 License
-This project is **free** and open source.  
-Feel free to copy, improve, or modify it!
-
----

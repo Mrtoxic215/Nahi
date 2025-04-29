@@ -1,52 +1,26 @@
-import os
-import logging
-import requests
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
+from googletrans import Translator
 
-# Logging setup
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO
-)
+# Initialize the translator
+translator = Translator()
 
-# Bot Token from environment
-TOKEN = os.getenv("BOT_TOKEN")
+# Function to handle text translation
+async def translate(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # User message (the text to be translated)
+    text_to_translate = update.message.text
 
-if not TOKEN:
-    raise Exception("BOT_TOKEN environment variable not set!")
+    # Default: Translate to English (change this to any language you want)
+    translated_text = translator.translate(text_to_translate, src='auto', dest='en').text
+    
+    await update.message.reply_text(f"Original: {text_to_translate}
+Translated: {translated_text}")
 
-# Function to fetch song link
-async def get_song_link(song_name):
-    try:
-        response = requests.get(f"https://saavn.dev/api/search/songs?query={song_name}")
-        data = response.json()
-        song = data['data']['results'][0]
-        song_title = song['name']
-        song_link = song['downloadUrl']['high']
-        return f"**{song_title}**\nDownload Link: {song_link}"
-    except Exception as e:
-        logging.error(f"Error fetching song: {e}")
-        return "Sorry, could not fetch the song. Please try again."
+# Create Telegram bot application
+app = ApplicationBuilder().token('7443022179:AAEme9o2mSMz9S6dAruVWpxcgBDj7xLfrdI').build()
 
-# Start command
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Welcome! Send me the song name and I'll get you the download link!")
+# Add the handler for text messages
+app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, translate))
 
-# Handle messages
-async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    song_name = update.message.text
-    reply = await get_song_link(song_name)
-    await update.message.reply_text(reply, parse_mode='Markdown')
-
-# Main function
-def main():
-    app = ApplicationBuilder().token(TOKEN).build()
-
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
-
-    app.run_polling()
-
-if __name__ == '__main__':
-    main()
+print("Bot is running...")
+app.run_polling()
